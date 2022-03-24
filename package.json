@@ -1,0 +1,26 @@
+{
+  "name": "zyix.s-discord-base",
+  "version": "1.0.0",
+  "description": "Simple and Powerfull Discord.js Base",
+  "main": "modules/Main.js",
+  "scripts": {
+    "test": "nodemon modules/Main.js",
+    "setup": "npm i nodemon && npm i",
+    "start": "node modules/Main.js",
+    "updateCommands": "node modules/builder/UpdateCommands.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zyixcodedev/nyoko-discord.git"
+  },
+  "author": "ZyixCode",
+  "license": "GNU AFFERO GENERAL PUBLIC LICENSE",
+  "bugs": {
+    "url": "https://github.com/zyixcodedev/zyix.s-discord-base/issues"
+  },
+  "homepage": "https://github.com/zyixcodedev/zyix.s-discord-base/wiki/Introduction",
+  "dependencies": {
+    "discord.js": "~13.6.0",
+    "nodemon": "^2.0.15"
+  }
+}

@@ -1,2 +1,2 @@
-# discord-base
-Simple and Powerful Discordʲˢ Bot Base
+# zyix.s-discord-base
+Simple and powerfull Discord.js Base
