@@ -1,21 +1,23 @@
 {
     "discord": {
-        "token": "discord bot token (can be found on discord.com/developers)",
+        "token": "",
         "prefix": ".",
         "guild": "",
         "users": {
-            "your user id": "4"
+            "your discord is": "4"
         },
         "modules": {
             "chatFilter": {
-                "enabled": true,
+                "enabled": false,
                 "blockDiscordInvites": true,
                 "blockURLS": true,
                 "blockedWords": [
                     "ReallyBadword"
                 ]
             },
-            "commands": "[object Object][object Object][object Object]"
+            "commands": [
+                "bot:BotCommand.js"
+            ]
         }
     }
 }

@@ -9,7 +9,7 @@ const init = async() => {
     Logger.info("Reading current Config...")
     var currentConfig = await JSON.parse(FS.readFileSync('config.json', 'utf-8'))
     Logger.info("Cleaning `discord.modules.commands`...")
-    currentConfig.discord.modules.commands = {}
+    currentConfig.discord.modules.commands = []
 
     let commands = currentConfig.discord.modules.commands
 
@@ -26,17 +26,14 @@ const init = async() => {
                     var invoke = line.split(' ')[0].substring("//!"),
                         args   = line.toString().replace('\r', '').split(' ').slice(1)
                     if (args[0] === "cmd:") { 
-                        currentConfig.discord.modules.commands += {
-                            "cmd": path.basename(commandClass)
-                        }
-                        await FS.writeFileSync('config.json', JSON.stringify(currentConfig, null, 4))
-                        var jsIsShit = await FS.readFileSync('config.json', 'utf-8').replace("cmd", args[1])
-                        await FS.writeFileSync('config.json', jsIsShit)
+                        currentConfig.discord.modules.commands.push(`${args[1]}:${path.basename(commandClass)}`)
                     }
                 }
             })
         }
     })
+
+    FS.writeFileSync("config.json", JSON.stringify(currentConfig, null, 4).toString())
 
     Logger.info("Successfully register all commands!")
 

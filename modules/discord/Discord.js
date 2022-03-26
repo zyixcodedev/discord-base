@@ -39,22 +39,29 @@ Bot.on('message', (msg) => {
             msg.delete()
 
             var invoke = content.split(' ')[0].substring(Config.discord.prefix.length),
-                args   = content.toString().split(' ').slice(1)
+                args   = content.toString().split(' ').slice(1),
+                found  = false
 
-            if (invoke in Config.discord.modules.commands) {
-                var command = require(`./commands/${Config.discord.modules.commands[invoke]}`),
-                    commandInfo = command.commandInfo
-                if (commandInfo.permissionLevel != "0") {
-                    if (author.id in Config.discord.users && Config.discord.users[author.id] == commandInfo.permissionLevel) {
-                        command.run(msg, args, Bot)
+            Config.discord.modules.commands.forEach((cmd) => {
+                var index = cmd.split(':')
+                if (invoke === index[0]) {
+                    var command = require(`./commands/${index[1]}`),
+                        commandInfo = command.commandInfo
+                    if (commandInfo.permissionLevel != "0") {
+                        if (author.id in Config.discord.users && Config.discord.users[author.id] == commandInfo.permissionLevel) {
+                            found = true
+                            command.run(msg, args, Bot)
+                        } else {
+                            channel.send({ embeds: [ EmbedBuilder.build("No Permission!", "You dont have the Permission to run this Command!", "#e74c3c")]})
+                        }
                     } else {
-                        channel.send({ embeds: [ EmbedBuilder.buildSimple("No Permission!", "You dont have the Permission to run this Command!", "#e74c3c")]})
+                        found = true
+                        command.run(msg, args)
                     }
-                } else {
-                    command.run(msg, args)
                 }
-            } else {
-                channel.send({ embeds: [ EmbedBuilder.buildSimple("Command not found!", "The Command doest exist!", "#e74c3c") ]})
+            })
+            if (!found) {
+                channel.send({ embeds: [ EmbedBuilder.build("Command not found!", "The Command doest exist!", "#e74c3c") ]})
             }
         } else {
             if (Config.discord.modules.chatFilter.enabled) {
