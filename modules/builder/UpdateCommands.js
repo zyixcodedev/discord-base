@@ -8,10 +8,10 @@ const init = async() => {
 
     Logger.info("Reading current Config...")
     var currentConfig = await JSON.parse(FS.readFileSync('config.json', 'utf-8'))
-    Logger.info("Cleaning `discord.modules.commands`...")
-    currentConfig.discord.modules.commands = []
+    Logger.info("Cleaning `discord.commands`...")
+    currentConfig.discord.commands = []
 
-    let commands = currentConfig.discord.modules.commands
+    let commands = currentConfig.discord.commands
 
     Logger.info("Fetching all classes in `modules/discord/commands`...")
     let commandClasses = []
@@ -26,7 +26,7 @@ const init = async() => {
                     var invoke = line.split(' ')[0].substring("//!"),
                         args   = line.toString().replace('\r', '').split(' ').slice(1)
                     if (args[0] === "cmd:") { 
-                        currentConfig.discord.modules.commands.push(`${args[1]}:${path.basename(commandClass)}`)
+                        currentConfig.discord.commands.push(`${args[1]}:${path.basename(commandClass)}`)
                     }
                 }
             })

@@ -6,6 +6,10 @@
         "users": {
             "your discord is": "4"
         },
+        "commands": [
+            "bot:BotCommand.js"
+        ],
+
         "modules": {
             "chatFilter": {
                 "enabled": false,
@@ -14,10 +18,7 @@
                 "blockedWords": [
                     "ReallyBadword"
                 ]
-            },
-            "commands": [
-                "bot:BotCommand.js"
-            ]
+            }
         }
     }
 }

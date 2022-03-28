@@ -20,12 +20,26 @@ const Bot           = new Discord.Client({
 })
 
 
+module.exports = {
+    async getModuleJson(moduleName) {
+        return Config.modules.moduleName
+    },
+    async getModuleEnabled(moduleName) {
+        return Config.module.moduleName.enabled
+    }
+}
+
+exports.Bot = Bot
+
+
 Bot.on('ready', () => {
     Logger.info(`Discord-Bot successfully connected to '${Bot.user.tag}'!`)
     if (Config.discord.guild === "") {
         Logger.warning("Discord Guild ID is not set! please set it with '.bot setguildid'.")
     }
 })
+
+
 
 Bot.on('message', (msg) => {
     var author  = msg.member,
@@ -42,7 +56,7 @@ Bot.on('message', (msg) => {
                 args   = content.toString().split(' ').slice(1),
                 found  = false
 
-            Config.discord.modules.commands.forEach((cmd) => {
+            Config.discord.commands.forEach((cmd) => {
                 var index = cmd.split(':')
                 if (invoke === index[0]) {
                     var command = require(`./commands/${index[1]}`),
@@ -67,13 +81,13 @@ Bot.on('message', (msg) => {
             if (Config.discord.modules.chatFilter.enabled) {
                 if (Config.discord.modules.chatFilter.blockURLS && content.toString().includes("http://") || content.toString().includes("https://")) {
                     msg.delete()
-                    channel.send({ embeds: [ EmbedBuilder.buildSimple("Dont post URLS!", "You are not allowed to post Links her!", "#e74c3c") ]})
+                    channel.send({ embeds: [ EmbedBuilder.build("Dont post URLS!", "You are not allowed to post Links her!", "#e74c3c") ]})
                 }
 
                 Config.discord.modules.chatFilter.blockedWords.forEach(word => {
                     if (content.toString().includes(word)) {
                         msg.delete()
-                        channel.send({ embeds: [ EmbedBuilder.buildSimple("Blocked Word in Sentence!", "The Sentence you sended contains a not allowed word!", "#e74c3c") ]})
+                        channel.send({ embeds: [ EmbedBuilder.build("Blocked Word in Sentence!", "The Sentence you sended contains a not allowed word!", "#e74c3c") ]})
                     }
                 })
             }
